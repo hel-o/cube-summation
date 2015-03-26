@@ -15,14 +15,22 @@ class TestCubeSummation(unittest.TestCase):
 
     def test_1_update_and_query_matrix(self):
         self.matrix3d.update(x=2, y=2, z=2, value=4)
-        assert 4 == self.matrix3d.query(x1=1, y1=1, z1=1, x2=3, y2=3, z2=3)
 
-    def test_2_update_and_sum_matrix(self):
+        assert 4 == self.matrix3d.query(x_1=1, y_1=1, z_1=1, x_2=3, y_2=3, z_2=3)
+
         self.matrix3d.update(x=1, y=1, z=1, value=23)
 
-        assert 4 == self.matrix3d.query(x1=2, y1=2, z1=2, x2=4, y2=4, z2=4)
-        assert 27 == self.matrix3d.query(x1=1, y1=1, z1=1, x2=3, y2=3, z2=3)
+        assert 4 == self.matrix3d.query(x_1=2, y_1=2, z_1=2, x_2=4, y_2=4, z_2=4)
+        assert 27 == self.matrix3d.query(x_1=1, y_1=1, z_1=1, x_2=3, y_2=3, z_2=3)
+
+    def test_2_update_and_query_matrix(self):
+        self.matrix3d.update(x=2, y=2, z=2, value=1)
+
+        assert 0 == self.matrix3d.query(x_1=1, y_1=1, z_1=1, x_2=1, y_2=1, z_2=1)
+        assert 1 == self.matrix3d.query(x_1=1, y_1=1, z_1=1, x_2=2, y_2=2, z_2=2)
+        assert 1 == self.matrix3d.query(x_1=2, y_1=2, z_1=2, x_2=2, y_2=2, z_2=2)
+
 
 
 if __name__ == '__main__':
-    unittest.TestCase()
+    unittest.main()
