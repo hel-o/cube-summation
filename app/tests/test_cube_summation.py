@@ -1,6 +1,6 @@
 import unittest
 
-from app.matrix3d import Cube
+from app.cube_summation.matrix3d import Cube
 
 
 class TestCubeSummation(unittest.TestCase):
@@ -29,7 +29,6 @@ class TestCubeSummation(unittest.TestCase):
         assert 0 == self.matrix3d.query(x_1=1, y_1=1, z_1=1, x_2=1, y_2=1, z_2=1)
         assert 1 == self.matrix3d.query(x_1=1, y_1=1, z_1=1, x_2=2, y_2=2, z_2=2)
         assert 1 == self.matrix3d.query(x_1=2, y_1=2, z_1=2, x_2=2, y_2=2, z_2=2)
-
 
 
 if __name__ == '__main__':
