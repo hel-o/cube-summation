@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    input[type='text']{
+        width: 30px;
+    }
+</style>
+{% endblock %}
+{% block page_content %}
+<h1>Matrix de {{ matrix_size }}x{{ matrix_size }}x{{ matrix_size }}</h1>
+<h2>Operaci&oacute;n nro. 1 de {{ operations }}</h2>
+<form action="/do-operation" method="post">
+    <select name="operation" onchange="selectKindOperation(this)">
+        <option value="">-Seleccione-</option>
+        <option value="update">UPDATE</option>
+        <option value="query">QUERY</option>
+    </select>
+    <div id="fields-for-update" style="display:none">
+        <input type="text" name="update-x" placeholder="X"/>,
+        <input type="text" name="update-y" placeholder="Y"/>,
+        <input type="text" name="update-z" placeholder="Z"/> =
+        <input type="text" name="update-value" placeholder="value"/>
+    </div>
+    <div id="fields-for-query" style="display: none;">
+        desde:
+        <input type="text" name="query-x1" placeholder="X1"/>,
+        <input type="text" name="query-y1" placeholder="Y1"/>,
+        <input type="text" name="query-z1" placeholder="Z1"/>,
+        hasta:
+        <input type="text" name="query-x2" placeholder="X2"/>,
+        <input type="text" name="query-y2" placeholder="Y2"/>,
+        <input type="text" name="query-z2" placeholder="Z2"/>
+    </div>
+    <button type="submit">Aceptar</button>
+</form>
+{% endblock %}
+{% block js %}
+<script>
+    // creo que no es necesario usar un framework javascript para estas pequeñas cosas:
+    function selectKindOperation(selectOption){
+        if(selectOption.value.length){
+            var fieldsForUpdate = document.getElementById('fields-for-update').style;
+            var fieldsForQuery = document.getElementById('fields-for-query').style;
+
+            if('update' == selectOption.value){
+                fieldsForUpdate.display = 'block';
+                fieldsForQuery.display = 'none';
+            }else if('query' == selectOption.value){
+                fieldsForQuery.display = 'block';
+                fieldsForUpdate.display = 'none';
+            }
+        }
+    }
+</script>
+{% endblock %}

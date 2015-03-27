@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<h2>Prueba Nro. 1 de {{ test_cases }}</h2>
+{% if errors %}
+<ul>
+    {% for msg in errors %}
+        <li>{{ msg }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form action="/config-cube" method="post">
+    <div>
+        Define la matriz(N x N x N)
+        <input type="text" name="matrix-size"/>
+    </div>
+    <div>
+        Nro. de operaciones
+        <input type="text" name="operations"/>
+    </div>
+    <div>
+        <button type="submit">Aceptar</button>
+    </div>
+</form>
+{% endblock %}
