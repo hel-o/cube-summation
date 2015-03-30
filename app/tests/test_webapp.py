@@ -52,6 +52,23 @@ class TestWebApp(unittest.TestCase):
         assert b'El tamaño de la matriz debe estar entre 1 y 100' in response.data
         assert b'El nro. de operaciones debe estar entre 1 y 1000' in response.data
 
+    def test_do_operation_update(self):
+        with self.client.session_transaction() as session:
+            session['n-operations'] = 4
+            session['matrix-size'] = 4
+            session['n-operations'] = 2
+
+        response = self.client.post('/do-operation', data={
+            'operation': 'update',
+            'update-x': 1,
+            'update-y': 1,
+            'update-z': 1,
+            'update-value': 20
+        })
+
+        # print response.data
+        assert b'se modific&oacute; en x=%d, y=%d, z=%d por el valor: %d' % (1, 1, 1, 20) in response.data
+
 
 if __name__ == '__main__':
     unittest.main()
