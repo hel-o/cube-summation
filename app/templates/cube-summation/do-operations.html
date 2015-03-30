@@ -33,6 +33,19 @@
     </div>
     <button type="submit">Aceptar</button>
 </form>
+{% if operation_name %}
+    <h2>resultado de la operaci&oacute;n: {{ operation_name }}</h2>
+    {% if operation_name == 'update' -%}
+        se modific&oacute; en x={{ form_axis.x }}, y={{ form_axis.y }}, z={{ form_axis.z }} por el valor: {{ operation_result }}
+    {% elif operation_name == 'query' -%}
+        resultado de la operaci&oacute;n QUERY: {{ operation_result }}
+    {% endif -%}
+{% endif %}
+
+{% for error in errors %}
+<li>{{ error }}</li>
+{% endfor %}
+
 {% endblock %}
 {% block js %}
 <script>
