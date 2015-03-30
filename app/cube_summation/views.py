@@ -1,8 +1,9 @@
 # coding=utf-8
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session
 
 
-from .forms import ConfigCubeForm
+from .forms import ConfigCubeForm, DoOperationForm
+from .matrix3d import Cube
 
 
 cube_views = Blueprint('cube_views', __name__)
@@ -27,9 +28,12 @@ def home():
 
 @cube_views.route('/config-cube', methods=['POST'])
 def config_cube():
-    data = request.form
-    form = ConfigCubeForm(data)
+    form = ConfigCubeForm(request.form)
     if form.is_valid():
+        # da error, TODO fix --> para tener un objeto en memoria:
+        # session['cube'] = Cube(form.matrix_size)
+        session['matrix-size'] = form.matrix_size
+        session['n-operations'] = form.operations
         return render_template(
             'cube-summation/do-operations.html',
             matrix_size=form.matrix_size,
@@ -44,4 +48,24 @@ def config_cube():
 
 @cube_views.route('/do-operation', methods=['POST'])
 def do_operation():
-    pass
+    form = DoOperationForm(request.form)
+    result = 0
+    if form.is_valid():
+        session['n-operations'] = int(session['n-operations']) - 1
+        # esto da error, lo dejo, problemas para tener un objeto en memoria
+        # cube = session['cube']
+        if form.operation == 'update':
+            # result = cube.update(form.x, form.y, form.z, form.value)
+            result = form.value
+        else:
+            # result = cube.query(f{% endblock %}orm.x, form.y, form.z, form.x_2, form.y_2, form.z_2)
+            result = form.value
+    return render_template(
+        'cube-summation/do-operations.html',
+        matrix_size=session['matrix-size'],
+        operations=session['n-operations'],
+        operation_name=form.operation,
+        operation_result=result,
+        form_axis=form,
+        errors=form.get_errors()
+    )
