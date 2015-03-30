@@ -27,6 +27,8 @@ class Cube(object):
                 and -10**9 <= value <= 10**9:
             x, y, z = x-1, y-1, z-1
             self._items_cube[z][x][y] = value
+            return value
+        return None
 
     def _check_axis(self, axis_1=0, axis_2=0):
         return 1 <= axis_1 <= axis_2 <= self.n
