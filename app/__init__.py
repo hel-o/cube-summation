@@ -6,6 +6,7 @@ def _create_app():
     from app.cube_summation.views import cube_views
 
     web_app = Flask(__name__)
+    web_app.secret_key = 's3cr3t-key'
     web_app.register_blueprint(cube_views)
     return web_app
 
